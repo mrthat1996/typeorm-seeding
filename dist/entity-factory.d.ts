@@ -19,7 +19,7 @@ export declare class EntityFactory<Entity, Context> {
     /**
      * Create makes a new entity and does persist it
      */
-    create(overrideParams?: EntityProperty<Entity>, _connection?: Connection): Promise<Entity>;
+    create(overrideParams?: EntityProperty<Entity>, connection?: Connection): Promise<Entity>;
     makeMany(amount: number, overrideParams?: EntityProperty<Entity>): Promise<Entity[]>;
     createMany(amount: number, overrideParams?: EntityProperty<Entity>, _connection?: Connection): Promise<Entity[]>;
     seed(overrideParams?: EntityProperty<Entity>): Promise<Entity>;

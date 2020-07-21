@@ -5,7 +5,6 @@ var tslib_1 = require("tslib");
 var Faker = require("faker");
 var factory_util_1 = require("./utils/factory.util");
 var log_util_1 = require("./utils/log.util");
-var connection_1 = require("./connection");
 var EntityFactory = /** @class */ (function () {
     function EntityFactory(name, entity, factory, context) {
         this.name = name;
@@ -38,45 +37,34 @@ var EntityFactory = /** @class */ (function () {
     /**
      * Create makes a new entity and does persist it
      */
-    EntityFactory.prototype.create = function (overrideParams, _connection) {
+    EntityFactory.prototype.create = function (overrideParams, connection) {
         if (overrideParams === void 0) { overrideParams = {}; }
         return tslib_1.__awaiter(this, void 0, void 0, function () {
-            var option, connection, _a, em, entity, error_1, message, message;
-            return tslib_1.__generator(this, function (_b) {
-                switch (_b.label) {
-                    case 0: return [4 /*yield*/, connection_1.getConnectionOptions()];
-                    case 1:
-                        option = _b.sent();
-                        if (!_connection) return [3 /*break*/, 2];
-                        _a = _connection;
-                        return [3 /*break*/, 4];
-                    case 2: return [4 /*yield*/, connection_1.createConnection(option)];
-                    case 3:
-                        _a = _b.sent();
-                        _b.label = 4;
-                    case 4:
-                        connection = _a;
-                        if (!(connection && connection.isConnected)) return [3 /*break*/, 10];
+            var em, entity, error_1, message, message;
+            return tslib_1.__generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        if (!(connection && connection.isConnected)) return [3 /*break*/, 6];
                         em = connection.createEntityManager();
-                        _b.label = 5;
-                    case 5:
-                        _b.trys.push([5, 8, , 9]);
+                        _a.label = 1;
+                    case 1:
+                        _a.trys.push([1, 4, , 5]);
                         return [4 /*yield*/, this.makeEnity(overrideParams, true)];
-                    case 6:
-                        entity = _b.sent();
+                    case 2:
+                        entity = _a.sent();
                         return [4 /*yield*/, em.save(entity)];
-                    case 7: return [2 /*return*/, _b.sent()];
-                    case 8:
-                        error_1 = _b.sent();
+                    case 3: return [2 /*return*/, _a.sent()];
+                    case 4:
+                        error_1 = _a.sent();
                         message = 'Could not save entity';
                         log_util_1.printError(message, error_1);
                         throw new Error(message);
-                    case 9: return [3 /*break*/, 11];
-                    case 10:
+                    case 5: return [3 /*break*/, 7];
+                    case 6:
                         message = 'No db connection is given';
                         log_util_1.printError(message);
                         throw new Error(message);
-                    case 11: return [2 /*return*/];
+                    case 7: return [2 /*return*/];
                 }
             });
         });

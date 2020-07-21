@@ -39,10 +39,7 @@ export class EntityFactory<Entity, Context> {
   /**
    * Create makes a new entity and does persist it
    */
-  public async create(overrideParams: EntityProperty<Entity> = {}, _connection?: Connection): Promise<Entity> {
-    const option = await getConnectionOptions()
-    const connection = _connection ? _connection : await createConnection(option)
-
+  public async create(overrideParams: EntityProperty<Entity> = {}, connection?: Connection): Promise<Entity> {
     if (connection && connection.isConnected) {
       const em = connection.createEntityManager()
       try {
