@@ -1,5 +1,4 @@
 ### generated stuff ###
-dist
 lib
 es
 coverage
@@ -21,6 +20,7 @@ node_modules/
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+.idea
 
 ### templates ###
 tmp
