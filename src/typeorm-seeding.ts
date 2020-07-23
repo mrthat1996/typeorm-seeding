@@ -14,12 +14,15 @@ import { ConfigureOption, configureConnection, getConnectionOptions, createConne
 export * from './importer'
 export * from './connection'
 export { Factory, Seeder } from './types'
-export { times } from './helpers'
+export {
+  times,
+} from './helpers'
 
 // -------------------------------------------------------------------------
 // Types & Variables
 // -------------------------------------------------------------------------
-;(global as any).seeder = {
+
+(global as any).seeder = {
   entityFactories: new Map<string, EntityFactoryDefinition<any, any>>(),
 }
 
@@ -40,9 +43,9 @@ export const factory: Factory = <Entity, Context>(entity: ObjectType<Entity>) =>
   return new EntityFactory<Entity, Context>(name, entity, entityFactoryObject.factory, context)
 }
 
-export const runSeeder = async (clazz: SeederConstructor): Promise<any> => {
+export const runSeeder = async (clazz: SeederConstructor, _connection?: Connection): Promise<any> => {
   const seeder: Seeder = new clazz()
-  const connection = await createConnection()
+  const connection = _connection ? _connection : await createConnection()
   return seeder.run(factory, connection)
 }
 

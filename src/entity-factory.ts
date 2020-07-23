@@ -1,5 +1,5 @@
 import * as Faker from 'faker'
-import { ObjectType } from 'typeorm'
+import { Connection, getConnectionManager, ObjectType } from 'typeorm'
 import { FactoryFunction, EntityProperty } from './types'
 import { isPromiseLike } from './utils/factory.util'
 import { printError, printWarning } from './utils/log.util'
@@ -13,7 +13,8 @@ export class EntityFactory<Entity, Context> {
     public entity: ObjectType<Entity>,
     private factory: FactoryFunction<Entity, Context>,
     private context?: Context,
-  ) {}
+  ) {
+  }
 
   // -------------------------------------------------------------------------
   // Public API
