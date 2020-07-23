@@ -1,5 +1,5 @@
 import * as Faker from 'faker'
-import { Connection, ObjectType } from 'typeorm'
+import { ObjectType } from 'typeorm'
 import { FactoryFunction, EntityProperty } from './types'
 import { isPromiseLike } from './utils/factory.util'
 import { printError, printWarning } from './utils/log.util'
@@ -39,7 +39,9 @@ export class EntityFactory<Entity, Context> {
   /**
    * Create makes a new entity and does persist it
    */
-  public async create(overrideParams: EntityProperty<Entity> = {}, connection?: Connection): Promise<Entity> {
+  public async create(overrideParams: EntityProperty<Entity> = {}): Promise<Entity> {
+    const option = await getConnectionOptions()
+    const connection = await createConnection(option)
     if (connection && connection.isConnected) {
       const em = connection.createEntityManager()
       try {
@@ -65,10 +67,10 @@ export class EntityFactory<Entity, Context> {
     return list
   }
 
-  public async createMany(amount: number, overrideParams: EntityProperty<Entity> = {}, _connection?: Connection): Promise<Entity[]> {
+  public async createMany(amount: number, overrideParams: EntityProperty<Entity> = {}): Promise<Entity[]> {
     const list = []
     for (let index = 0; index < amount; index++) {
-      list[index] = await this.create(overrideParams, _connection)
+      list[index] = await this.create(overrideParams)
     }
     return list
   }
