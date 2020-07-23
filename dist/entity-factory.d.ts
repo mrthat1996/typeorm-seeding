@@ -1,4 +1,4 @@
-import { Connection, ObjectType } from 'typeorm';
+import { ObjectType } from 'typeorm';
 import { FactoryFunction, EntityProperty } from './types';
 export declare class EntityFactory<Entity, Context> {
     name: string;
@@ -19,9 +19,9 @@ export declare class EntityFactory<Entity, Context> {
     /**
      * Create makes a new entity and does persist it
      */
-    create(overrideParams?: EntityProperty<Entity>, connection?: Connection): Promise<Entity>;
+    create(overrideParams?: EntityProperty<Entity>): Promise<Entity>;
     makeMany(amount: number, overrideParams?: EntityProperty<Entity>): Promise<Entity[]>;
-    createMany(amount: number, overrideParams?: EntityProperty<Entity>, _connection?: Connection): Promise<Entity[]>;
+    createMany(amount: number, overrideParams?: EntityProperty<Entity>): Promise<Entity[]>;
     seed(overrideParams?: EntityProperty<Entity>): Promise<Entity>;
     seedMany(amount: number, overrideParams?: EntityProperty<Entity>): Promise<Entity[]>;
     private makeEnity;

@@ -14,6 +14,9 @@ tslib_1.__exportStar(require("./importer"), exports);
 tslib_1.__exportStar(require("./connection"), exports);
 var helpers_1 = require("./helpers");
 Object.defineProperty(exports, "times", { enumerable: true, get: function () { return helpers_1.times; } });
+// -------------------------------------------------------------------------
+// Types & Variables
+// -------------------------------------------------------------------------
 global.seeder = {
     entityFactories: new Map(),
 };
@@ -32,15 +35,21 @@ exports.factory = function (entity) { return function (context) {
     var entityFactoryObject = global.seeder.entityFactories.get(name);
     return new entity_factory_1.EntityFactory(name, entity, entityFactoryObject.factory, context);
 }; };
-exports.runSeeder = function (clazz) { return tslib_1.__awaiter(void 0, void 0, void 0, function () {
-    var seeder, connection;
-    return tslib_1.__generator(this, function (_a) {
-        switch (_a.label) {
+exports.runSeeder = function (clazz, _connection) { return tslib_1.__awaiter(void 0, void 0, void 0, function () {
+    var seeder, connection, _a;
+    return tslib_1.__generator(this, function (_b) {
+        switch (_b.label) {
             case 0:
                 seeder = new clazz();
-                return [4 /*yield*/, connection_1.createConnection()];
-            case 1:
-                connection = _a.sent();
+                if (!_connection) return [3 /*break*/, 1];
+                _a = _connection;
+                return [3 /*break*/, 3];
+            case 1: return [4 /*yield*/, connection_1.createConnection()];
+            case 2:
+                _a = _b.sent();
+                _b.label = 3;
+            case 3:
+                connection = _a;
                 return [2 /*return*/, seeder.run(exports.factory, connection)];
         }
     });
